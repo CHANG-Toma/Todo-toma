@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Todo_toma.ViewModels"
+             x:Class="Todo_toma.MainPage">
+
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout Padding="20" Spacing="16">
+        <Entry Placeholder="Nouvelle tâche"
+               Text="{Binding NewTaskTitle}" />
+
+        <Button Text="Ajouter"
+                Command="{Binding AddTaskCommand}" />
+
+        <CollectionView ItemsSource="{Binding Tasks}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <HorizontalStackLayout Spacing="12" Padding="6">
+                        <CheckBox IsChecked="{Binding IsDone}" VerticalOptions="Center" />
+                        <Label Text="{Binding Title}"
+                               VerticalOptions="Center"
+                               TextDecorations="{Binding TextDecoration}" />
+                        <Button Text="Supprimer"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteTaskCommand}"
+                                CommandParameter="{Binding .}" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>
